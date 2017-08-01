@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/status_bar"
+        android:key="statbar">
+
+        <SwitchPreference
+            android:title="@string/minbatstat"
+            android:key="minbatstat" />
+
+        <SwitchPreference
+            android:title="@string/minclockstat"
+            android:key="minclockstat" />
+
+        <SwitchPreference
+            android:title="@string/aospsignal"
+            android:key="aospsignal" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/aod"
+        android:key="aod">
+
+        <SwitchPreference
+            android:title="@string/minbataod"
+            android:key="minbataod" />
+
+        <SwitchPreference
+            android:title="@string/minclockaod"
+            android:key="minclockaod" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/immersive"
+        android:key="immersive">
+
+        <SwitchPreference
+            android:title="@string/minbatimm"
+            android:key="minbatimm" />
+
+        <SwitchPreference
+            android:title="@string/minclockimm"
+            android:key="minclockimm" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/other"
+        android:key="other">
+
+        <SwitchPreference
+            android:title="@string/wakeplug"
+            android:key="wakeplug" />
+
+        <SwitchPreference
+            android:title="@string/chargewarn"
+            android:key="chargewarn" />
+
+        <SwitchPreference
+            android:title="@string/sbscreen"
+            android:key="sbscreen" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Mod Control Redesign</string>
+
+    <string name="device">Device</string>
+    <string name="view_log">View log</string>
+    <string name="color_mods">Color Mods</string>
+    <string name="other_mods">Other Mods</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="signature_color">Signature Color</string>
+    <string name="aod_signature_color">AOD Signature Color</string>
+    <string name="navbar_color">NavBar Button Color</string>
+    <string name="qt_1">First Toggle</string>
+    <string name="qt_2">Second Toggle</string>
+    <string name="qt_3">Third Toggle</string>
+    <string name="qt_4">Fourth Toggle</string>
+    <string name="qt_5">Fifth Toggle</string>
+    <string name="minbatstat">3Minit Battery in Status Bar</string>
+    <string name="minclockstat">3Minit Clock in Status Bar</string>
+    <string name="aospsignal">AOSP Signal Icon</string>
+    <string name="minbataod">3Minit Battery in AOD</string>
+    <string name="minclockaod">3Minit Clock in AOD</string>
+    <string name="minbatimm">3Minit Battery in Immersive Mode</string>
+    <string name="minclockimm">3Minit Clock in Immersive Mode</string>
+    <string name="wakeplug">Wake On Plug</string>
+    <string name="chargewarn">Slow Charger Warning</string>
+    <string name="sbscreen">SignBoard in Screenshot</string>
+    <string name="restart_sysui">Restart System UI</string>
+    <string name="hot_reboot">Hot Reboot</string>
+
+    <string name="choose_device">Choose your device first.</string>
+    <string name="view_log_summary">View the log of settings that have been changed.</string>
+    <string name="color_mods_summary">Change the color of certain elements of the UI.</string>
+    <string name="other_mods_summary">Toggle various UI options.</string>
+    <string name="dark_mode_summary">Use dark theme in app.</string>
+
+    <string name="general">General</string>
+    <string name="mods">Mods</string>
+    <string name="other">Other</string>
+    <string name="quicktools_colors_title">QuickTools</string>
+    <string name="signature_colors_title">Signatures</string>
+    <string name="navbar_color_title">Navigation Bar</string>
+    <string name="status_bar">Status Bar</string>
+    <string name="aod">AOD</string>
+    <string name="immersive">Immersive Status Bar</string>
+
+    <string name="grant_perm_message">
+        Please grant the following permission to com.zacharee1.modcontrolredesign:\n\nandroid.permission.WRITE_SECURE_SETTINGS
+    </string>
+
+    <string-array name="device_arr_display">
+        <item>V20</item>
+        <item>G5</item>
+    </string-array>
+    <string-array name="device_arr_vals">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

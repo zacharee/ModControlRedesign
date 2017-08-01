@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/general">
+
+        <ListPreference
+            android:title="@string/device"
+            android:summary="@string/choose_device"
+            android:key="device"
+            android:entries="@array/device_arr_display"
+            android:entryValues="@array/device_arr_vals"
+            android:persistent="true" />
+
+        <Preference
+            android:title="@string/view_log"
+            android:summary="@string/view_log_summary"
+            android:key="view_log" />
+
+        <Preference
+            android:title="@string/restart_sysui"
+            android:key="restart_sysui" />
+
+        <Preference
+            android:title="@string/hot_reboot"
+            android:key="hot_reboot" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/mods"
+        android:key="mods" >
+
+        <Preference
+            android:title="@string/color_mods"
+            android:summary="@string/color_mods_summary"
+            android:key="color_mods" />
+
+        <Preference
+            android:title="@string/other_mods"
+            android:summary="@string/other_mods_summary"
+            android:key="other_mods" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/other">
+
+        <SwitchPreference
+            android:title="@string/dark_mode"
+            android:summary="@string/dark_mode_summary"
+            android:key="dark_mode" />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

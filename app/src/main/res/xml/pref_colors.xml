@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/quicktools_colors_title"
+        android:key="quick_tools">
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/qt_1"
+            android:key="qt_0" />
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/qt_2"
+            android:key="qt_1" />
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/qt_3"
+            android:key="qt_2" />
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/qt_4"
+            android:key="qt_3" />
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/qt_5"
+            android:key="qt_4" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/signature_colors_title"
+        android:key="sigs">
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/signature_color"
+            android:key="sig_color" />
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/aod_signature_color"
+            android:key="aod_sig_color" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/navbar_color_title"
+        android:key="navbar">
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/navbar_color"
+            android:key="nav_0" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
