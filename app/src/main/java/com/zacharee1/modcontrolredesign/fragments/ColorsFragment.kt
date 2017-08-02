@@ -1,9 +1,7 @@
 package com.zacharee1.modcontrolredesign.fragments
 
-import android.database.ContentObserver
 import android.os.Bundle
 import android.graphics.Color
-import android.os.Handler
 import android.preference.PreferenceFragment
 import android.preference.PreferenceManager
 import android.provider.Settings
@@ -11,10 +9,9 @@ import android.support.v7.app.AppCompatActivity
 import com.jaredrummler.android.colorpicker.ColorPreference
 
 import com.zacharee1.modcontrolredesign.R
-import com.zacharee1.modcontrolredesign.Stuff
+import com.zacharee1.modcontrolredesign.util.Stuff
 
 class ColorsFragment : PreferenceFragment() {
-    private var isV20: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,15 +19,13 @@ class ColorsFragment : PreferenceFragment() {
         addPreferencesFromResource(R.xml.pref_colors)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        isV20 = Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getString("device", "-1")) == Stuff.V20
-
         setQTColors()
         setSigColors()
         setNavBarColors()
     }
 
     private fun setQTColors() {
-        if (isV20) {
+        if (Stuff.isV20) {
             val baseKeyRed = "redqt_"
             val baseKeyGreen = "greenqt_"
             val baseKeyBlue = "blueqt_"
@@ -44,7 +39,7 @@ class ColorsFragment : PreferenceFragment() {
                 val color = Color.argb(0xff, colorRed, colorGreen, colorBlue)
                 pref.saveValue(color)
 
-                pref.setOnPreferenceChangeListener { preference, any ->
+                pref.setOnPreferenceChangeListener { _, any ->
                     val colorInt = Integer.valueOf(any.toString())
                     val red = Color.red(colorInt)
                     val green = Color.green(colorInt)
@@ -69,7 +64,7 @@ class ColorsFragment : PreferenceFragment() {
         val baseBlue = "bluesig"
         val aod = "aod"
 
-        if (!isV20) sig.isEnabled = false
+        if (!Stuff.isV20) sig.isEnabled = false
 
         val colorRed = Settings.Global.getInt(activity.contentResolver, baseRed, 0xff)
         val colorGreen = Settings.Global.getInt(activity.contentResolver, baseGreen, 0xff)
@@ -78,10 +73,10 @@ class ColorsFragment : PreferenceFragment() {
         val colorGreenAod = Settings.Global.getInt(activity.contentResolver, baseGreen + aod, 0xff)
         val colorBlueAod = Settings.Global.getInt(activity.contentResolver, baseBlue + aod, 0xff)
 
-        if (isV20) sig.saveValue(Color.argb(0xff, colorRed, colorGreen, colorBlue))
+        if (Stuff.isV20) sig.saveValue(Color.argb(0xff, colorRed, colorGreen, colorBlue))
         sigAod.saveValue(Color.argb(0xff, colorRedAod, colorGreenAod, colorBlueAod))
 
-        if (isV20) sig.setOnPreferenceChangeListener { preference, any ->
+        if (Stuff.isV20) sig.setOnPreferenceChangeListener { _, any ->
             val color = Integer.valueOf(any.toString())
             val red = Color.red(color)
             val green = Color.green(color)
@@ -93,7 +88,7 @@ class ColorsFragment : PreferenceFragment() {
             true
         }
 
-        sigAod.setOnPreferenceChangeListener { preference, any ->
+        sigAod.setOnPreferenceChangeListener { _, any ->
             val color = Integer.valueOf(any.toString())
             val red = Color.red(color)
             val green = Color.green(color)
@@ -120,7 +115,7 @@ class ColorsFragment : PreferenceFragment() {
             val color = Color.argb(0xff, colorRed, colorGreen, colorBlue)
             pref.saveValue(color)
 
-            pref.setOnPreferenceChangeListener { preference, any ->
+            pref.setOnPreferenceChangeListener { _, any ->
                 val colorInt = Integer.valueOf(any.toString())
                 val red = Color.red(colorInt)
                 val green = Color.green(colorInt)

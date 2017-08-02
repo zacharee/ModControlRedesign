@@ -1,12 +1,13 @@
 package com.zacharee1.modcontrolredesign.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.preference.ListPreference
 import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.support.v7.app.AppCompatActivity
 import com.zacharee1.modcontrolredesign.R
-import com.zacharee1.modcontrolredesign.Stuff
+import com.zacharee1.modcontrolredesign.util.Stuff
 import com.zacharee1.modcontrolredesign.util.SuUtils
 
 public class MainFragment : PreferenceFragment() {
@@ -21,12 +22,7 @@ public class MainFragment : PreferenceFragment() {
     }
 
     private fun setListeners() {
-        val chooseDevice = findPreference("device") as ListPreference
-        chooseDevice.summary = setDeviceChosen(chooseDevice.value)
-        chooseDevice.setOnPreferenceChangeListener { preference, any ->
-            preference.summary = setDeviceChosen(any.toString())
-            true
-        }
+        findPreference("device").summary = resources.getString(R.string.current_device) + " " + if (Stuff.isV20) Stuff.V20 else Stuff.G5
 
         val openLog = findPreference("view_log")
         openLog.setOnPreferenceClickListener {
@@ -59,28 +55,9 @@ public class MainFragment : PreferenceFragment() {
         }
 
         val darkMode = findPreference("dark_mode") as SwitchPreference
-        darkMode.setOnPreferenceChangeListener { preference, any ->
-            //change to dark theme
+        darkMode.setOnPreferenceChangeListener { _, _ ->
+            activity.recreate()
             true
         }
-    }
-
-    private fun setDeviceChosen(value: String?): String {
-        if (value != null) {
-            findPreference("mods").isEnabled = true
-
-            when (Integer.valueOf(value)) {
-                Stuff.V20 -> {
-                    return "V20"
-                }
-                Stuff.G5 -> {
-                    return "G5"
-                }
-            }
-        } else {
-            findPreference("mods").isEnabled = false
-        }
-
-        return resources.getString(R.string.choose_device)
     }
 }

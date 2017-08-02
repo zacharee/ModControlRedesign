@@ -4,13 +4,10 @@
     <PreferenceCategory
         android:title="@string/general">
 
-        <ListPreference
+        <Preference
             android:title="@string/device"
-            android:summary="@string/choose_device"
             android:key="device"
-            android:entries="@array/device_arr_display"
-            android:entryValues="@array/device_arr_vals"
-            android:persistent="true" />
+            android:enabled="false" />
 
         <Preference
             android:title="@string/view_log"

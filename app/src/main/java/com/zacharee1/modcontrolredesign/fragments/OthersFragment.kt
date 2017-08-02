@@ -6,8 +6,11 @@ import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.zacharee1.modcontrolredesign.R
-import com.zacharee1.modcontrolredesign.Stuff
+import com.zacharee1.modcontrolredesign.util.Stuff
+import com.zacharee1.modcontrolredesign.util.BuildProp
+import com.zacharee1.modcontrolredesign.util.SuUtils
 
 class OthersFragment : PreferenceFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,37 +35,38 @@ class OthersFragment : PreferenceFragment() {
 
         val wakeonplug = Settings.Global.getInt(activity.contentResolver, Stuff.WAKE_ON_PLUG, 1)
         val slowchargewarn = Settings.Global.getInt(activity.contentResolver, Stuff.CHARGE_WARN, 1)
+        val ss_screenshot = BuildProp.readValueOfKey(Stuff.SS_CAPTURE)
 
-        if (Integer.valueOf(preferenceManager.sharedPreferences.getString("device", "-1")) == Stuff.V20) {
+        if (Stuff.isV20) {
             val minbatimmSwitch = findPreference("minbatimm") as SwitchPreference
             val minclockimmSwitch = findPreference("minclockimm") as SwitchPreference
-            val wakeonplugSwitch = findPreference("wakeplug") as SwitchPreference
+            val ss_screenshotSwitch = findPreference("sbscreen") as SwitchPreference
 
             minbatimmSwitch.isChecked = minbatimm == 1
-            minbatimmSwitch.setOnPreferenceChangeListener { preference, any ->
+            minbatimmSwitch.setOnPreferenceChangeListener { _, any ->
                 val newVal = java.lang.Boolean.valueOf(any.toString())
                 Settings.Global.putInt(activity.contentResolver, Stuff.BAT_IMM, if (newVal) 1 else 0)
                 true
             }
 
             minclockimmSwitch.isChecked = minclockimm == 1
-            minclockimmSwitch.setOnPreferenceChangeListener { preference, any ->
+            minclockimmSwitch.setOnPreferenceChangeListener { _, any ->
                 val newVal = java.lang.Boolean.valueOf(any.toString())
                 Settings.Global.putInt(activity.contentResolver, Stuff.CLOCK_IMM, if (newVal) 1 else 0)
                 true
             }
 
-            wakeonplugSwitch.isChecked = wakeonplug == 1
-            wakeonplugSwitch.setOnPreferenceChangeListener { preference, any ->
-                val newVal = java.lang.Boolean.valueOf(any.toString())
-                Settings.Global.putInt(activity.contentResolver, Stuff.WAKE_ON_PLUG, if (newVal) 1 else 0)
+            ss_screenshotSwitch.isChecked = ss_screenshot == "true"
+            ss_screenshotSwitch.setOnPreferenceChangeListener { _, any ->
+                val newVal = any.toString()
+                BuildProp.setValueForKey(Stuff.SS_CAPTURE, newVal)
                 true
             }
         } else {
             val immCategory = findPreference("immersive") as PreferenceCategory
             immCategory.isEnabled = false
 
-            findPreference("wakeplug").isEnabled = false
+            findPreference("sbscreen").isEnabled = false
         }
 
         val minbatstatSwitch = findPreference("minbatstat") as SwitchPreference
@@ -70,23 +74,24 @@ class OthersFragment : PreferenceFragment() {
         val aospsignalSwitch = findPreference("aospsignal") as SwitchPreference
 
         minbatstatSwitch.isChecked = minbatstat == 1
-        minbatstatSwitch.setOnPreferenceChangeListener { preference, any ->
+        minbatstatSwitch.setOnPreferenceChangeListener { _, any ->
             val newVal = java.lang.Boolean.valueOf(any.toString())
             Settings.Global.putInt(activity.contentResolver, Stuff.BAT_STAT, if (newVal) 1 else 0)
             true
         }
 
         minclockstatSwitch.isChecked = minclockstat == 1
-        minclockstatSwitch.setOnPreferenceChangeListener { preference, any ->
+        minclockstatSwitch.setOnPreferenceChangeListener { _, any ->
             val newVal = java.lang.Boolean.valueOf(any.toString())
             Settings.Global.putInt(activity.contentResolver, Stuff.CLOCK_STAT, if (newVal) 1 else 0)
             true
         }
 
         aospsignalSwitch.isChecked = aospsignal != 1
-        aospsignalSwitch.setOnPreferenceChangeListener { preference, any ->
+        aospsignalSwitch.setOnPreferenceChangeListener { _, any ->
             val newVal = java.lang.Boolean.valueOf(any.toString())
             Settings.Global.putInt(activity.contentResolver, Stuff.STOCK_SIGNAL, if (newVal) 0 else 1)
+            SuUtils.sudo(Array(1) {"killall com.android.systemui"})
             true
         }
 
@@ -94,14 +99,14 @@ class OthersFragment : PreferenceFragment() {
         val minclockaodSwitch = findPreference("minclockaod") as SwitchPreference
 
         minbataodSwitch.isChecked = minbataod == 1
-        minbataodSwitch.setOnPreferenceChangeListener { preference, any ->
+        minbataodSwitch.setOnPreferenceChangeListener { _, any ->
             val newVal = java.lang.Boolean.valueOf(any.toString())
             Settings.Global.putInt(activity.contentResolver, Stuff.BAT_AOD, if (newVal) 1 else 0)
             true
         }
 
         minclockaodSwitch.isChecked = minclockaod == 1
-        minclockaodSwitch.setOnPreferenceChangeListener { preference, any ->
+        minclockaodSwitch.setOnPreferenceChangeListener { _, any ->
             val newVal = java.lang.Boolean.valueOf(any.toString())
             Settings.Global.putInt(activity.contentResolver, Stuff.CLOCK_AOD, if (newVal) 1 else 0)
             true
@@ -110,9 +115,18 @@ class OthersFragment : PreferenceFragment() {
         val slowchargewarnSwitch = findPreference("chargewarn") as SwitchPreference
 
         slowchargewarnSwitch.isChecked = slowchargewarn == 1
-        slowchargewarnSwitch.setOnPreferenceChangeListener { preference, any ->
+        slowchargewarnSwitch.setOnPreferenceChangeListener { _, any ->
             val newVal = java.lang.Boolean.valueOf(any.toString())
             Settings.Global.putInt(activity.contentResolver, Stuff.CHARGE_WARN, if (newVal) 1 else 0)
+            true
+        }
+
+        val wakeonplugSwitch = findPreference("wakeplug") as SwitchPreference
+
+        wakeonplugSwitch.isChecked = wakeonplug == 1
+        wakeonplugSwitch.setOnPreferenceChangeListener { _, any ->
+            val newVal = java.lang.Boolean.valueOf(any.toString())
+            Settings.Global.putInt(activity.contentResolver, Stuff.WAKE_ON_PLUG, if (newVal) 1 else 0)
             true
         }
     }

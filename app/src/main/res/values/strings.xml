@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mod Control Redesign</string>
+    <string name="app_name">Mod Control</string>
 
     <string name="device">Device</string>
     <string name="view_log">View log</string>
@@ -27,7 +27,7 @@
     <string name="restart_sysui">Restart System UI</string>
     <string name="hot_reboot">Hot Reboot</string>
 
-    <string name="choose_device">Choose your device first.</string>
+    <string name="current_device">Detected Device:</string>
     <string name="view_log_summary">View the log of settings that have been changed.</string>
     <string name="color_mods_summary">Change the color of certain elements of the UI.</string>
     <string name="other_mods_summary">Toggle various UI options.</string>
@@ -46,6 +46,7 @@
     <string name="grant_perm_message">
         Please grant the following permission to com.zacharee1.modcontrolredesign:\n\nandroid.permission.WRITE_SECURE_SETTINGS
     </string>
+    <string name="unsupported_device">Your device (%s) is unsupported. You need either an LG V20 (%s) or LG G5 (%s) to use this app.</string>
 
     <string-array name="device_arr_display">
         <item>V20</item>

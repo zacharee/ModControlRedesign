@@ -1,20 +1,36 @@
 package com.zacharee1.modcontrolredesign
 
-import android.content.DialogInterface
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.provider.Settings
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
 import com.zacharee1.modcontrolredesign.fragments.MainFragment
+import com.zacharee1.modcontrolredesign.util.Stuff
 import com.zacharee1.modcontrolredesign.util.SuUtils
 
 class StarterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val useDark = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("dark_mode", false)
+        setTheme(if (useDark) R.style.AppTheme_Dark else R.style.AppTheme)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if (!Stuff.isSupportedDevice) {
+            AlertDialog.Builder(this)
+                    .setMessage(String.format(resources.getString(R.string.unsupported_device), Build.DEVICE, Stuff.V20_CODE, Stuff.G5_CODE))
+                    .setPositiveButton("OK", null)
+                    .setOnDismissListener {
+                        finish()
+                    }
+                    .setCancelable(false)
+                    .show()
+        }
 
         try {
             Settings.Global.putInt(contentResolver, "Mod Control", 1)
@@ -31,9 +47,9 @@ class StarterActivity : AppCompatActivity() {
                 AlertDialog.Builder(this)
                         .setMessage(R.string.grant_perm_message)
                         .setPositiveButton("OK", null)
-                        .setOnDismissListener({
+                        .setOnDismissListener {
                             recreate()
-                        })
+                        }
                         .show()
             }
         }
