@@ -2,7 +2,6 @@
     <string name="app_name">Mod Control</string>
 
     <string name="device">Device</string>
-    <string name="view_log">View log</string>
     <string name="color_mods">Color Mods</string>
     <string name="other_mods">Other Mods</string>
     <string name="dark_mode">Dark Mode</string>
@@ -28,10 +27,10 @@
     <string name="hot_reboot">Hot Reboot</string>
 
     <string name="current_device">Detected Device:</string>
-    <string name="view_log_summary">View the log of settings that have been changed.</string>
     <string name="color_mods_summary">Change the color of certain elements of the UI.</string>
     <string name="other_mods_summary">Toggle various UI options.</string>
     <string name="dark_mode_summary">Use dark theme in app.</string>
+    <string name="bat_aod_warn">3Minit Clock won\'t update in the AOD on the V20!</string>
 
     <string name="general">General</string>
     <string name="mods">Mods</string>

@@ -24,12 +24,6 @@ public class MainFragment : PreferenceFragment() {
     private fun setListeners() {
         findPreference("device").summary = resources.getString(R.string.current_device) + " " + if (Stuff.isV20) Stuff.V20 else Stuff.G5
 
-        val openLog = findPreference("view_log")
-        openLog.setOnPreferenceClickListener {
-            activity.fragmentManager.beginTransaction().replace(R.id.content_main, LogFragment()).commit()
-            true
-        }
-
         val restartSystemUI = findPreference("restart_sysui")
         restartSystemUI.setOnPreferenceClickListener {
             SuUtils.sudo(Array(1) {"killall com.android.systemui"})

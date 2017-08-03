@@ -29,6 +29,7 @@
 
         <SwitchPreference
             android:title="@string/minclockaod"
+            android:summary="@string/bat_aod_warn"
             android:key="minclockaod" />
 
     </PreferenceCategory>

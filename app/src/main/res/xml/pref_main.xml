@@ -10,11 +10,6 @@
             android:enabled="false" />
 
         <Preference
-            android:title="@string/view_log"
-            android:summary="@string/view_log_summary"
-            android:key="view_log" />
-
-        <Preference
             android:title="@string/restart_sysui"
             android:key="restart_sysui" />
 
