@@ -1,6 +1,7 @@
 package com.zacharee1.modcontrolredesign.fragments
 
 import android.os.Bundle
+import android.preference.EditTextPreference
 import android.preference.PreferenceCategory
 import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
@@ -11,6 +12,7 @@ import com.zacharee1.modcontrolredesign.R
 import com.zacharee1.modcontrolredesign.util.Stuff
 import com.zacharee1.modcontrolredesign.util.BuildProp
 import com.zacharee1.modcontrolredesign.util.SuUtils
+import java.lang.Exception
 
 class OthersFragment : PreferenceFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +22,7 @@ class OthersFragment : PreferenceFragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setSwitchListeners()
+        setSoundListeners()
     }
 
     private fun setSwitchListeners() {
@@ -127,6 +130,27 @@ class OthersFragment : PreferenceFragment() {
         wakeonplugSwitch.setOnPreferenceChangeListener { _, any ->
             val newVal = java.lang.Boolean.valueOf(any.toString())
             Settings.Global.putInt(activity.contentResolver, Stuff.WAKE_ON_PLUG, if (newVal) 1 else 0)
+            true
+        }
+    }
+
+    private fun setSoundListeners() {
+        val volStepSize = findPreference("volume_step_size") as EditTextPreference
+
+        val currentStepSize = Settings.Global.getInt(activity.contentResolver, volStepSize.key, 2)
+
+        volStepSize.summary = Integer.toString(currentStepSize)
+
+        volStepSize.setOnPreferenceChangeListener { preference, newValue ->
+            try {
+                val size = Integer.valueOf(newValue.toString())
+
+                Settings.Global.putInt(activity.contentResolver, preference.key, size)
+
+                preference.summary = Integer.toString(size)
+            } catch (e: Exception) {
+
+            }
             true
         }
     }

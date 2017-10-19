@@ -25,6 +25,7 @@
     <string name="sbscreen">SignBoard in Screenshot</string>
     <string name="restart_sysui">Restart System UI</string>
     <string name="hot_reboot">Hot Reboot</string>
+    <string name="volume_step_size">Volume Step Size</string>
 
     <string name="current_device">Detected Device:</string>
     <string name="color_mods_summary">Change the color of certain elements of the UI.</string>
@@ -41,6 +42,7 @@
     <string name="status_bar">Status Bar</string>
     <string name="aod">AOD</string>
     <string name="immersive">Immersive Status Bar</string>
+    <string name="sound">Sound</string>
 
     <string name="grant_perm_message">
         Please grant the following permission to com.zacharee1.modcontrolredesign:\n\nandroid.permission.WRITE_SECURE_SETTINGS
