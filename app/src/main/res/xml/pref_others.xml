@@ -66,15 +66,4 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/sound"
-        android:key="sound">
-
-        <EditTextPreference
-            android:title="@string/volume_step_size"
-            android:summary="2"
-            android:key="volume_step_size" />
-
-    </PreferenceCategory>
-
 </PreferenceScreen>
