@@ -20,6 +20,18 @@
         <com.jaredrummler.android.colorpicker.ColorPreference
             android:title="@string/qt_5"
             android:key="qt_4" />
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="Sixth Toggle"
+            android:key="qt_5" />
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="Seventh Toggle"
+            android:key="qt_6" />
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="Eighth Toggle"
+            android:key="qt_7" />
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="Ninth Toggle"
+            android:key="qt_8" />
 
     </PreferenceCategory>
 

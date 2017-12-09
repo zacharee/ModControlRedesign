@@ -31,7 +31,7 @@ class ColorsFragment : PreferenceFragment() {
             val baseKeyBlue = "blueqt_"
             val prefKey = "qt_"
 
-            for (i in 0..4) {
+            for (i in 0..8) {
                 val pref = findPreference(prefKey + i) as ColorPreference
                 val colorRed = Settings.Global.getInt(activity.contentResolver, baseKeyRed + i, 0xff)
                 val colorGreen = Settings.Global.getInt(activity.contentResolver, baseKeyGreen + i, 0xff)
