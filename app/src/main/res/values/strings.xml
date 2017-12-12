@@ -13,6 +13,13 @@
     <string name="qt_3">Third Toggle</string>
     <string name="qt_4">Fourth Toggle</string>
     <string name="qt_5">Fifth Toggle</string>
+    <string name="qt_6">Sixth Toggle</string>
+    <string name="qt_7">Seventh Toggle</string>
+    <string name="qt_8">Eighth Toggle</string>
+    <string name="qt_9">Ninth Toggle</string>
+    <string name="qt_10">Tenth Toggle</string>
+    <string name="qt_11">Eleventh Toggle</string>
+    <string name="qt_12">Twelfth Toggle</string>
     <string name="minbatstat">3Minit Battery in Status Bar</string>
     <string name="minclockstat">3Minit Clock in Status Bar</string>
     <string name="aospsignal">AOSP Signal Icon</string>
