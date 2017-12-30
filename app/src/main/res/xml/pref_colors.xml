@@ -61,6 +61,10 @@
         android:title="@string/navbar_color_title"
         android:key="navbar">
 
+        <SwitchPreference
+            android:title="@string/enable"
+            android:key="enable_nav_color" />
+
         <com.jaredrummler.android.colorpicker.ColorPreference
             android:title="@string/navbar_color"
             android:key="nav_0" />

@@ -25,4 +25,9 @@ object Stuff {
     val STOCK_SIGNAL = "wide_data"
     val WAKE_ON_PLUG = "wake_on_plug"
     val CHARGE_WARN = "charge_warning"
+
+    val STATUS_BAR_HEIGHT = "status_bar_height"
+    val NAV_BAR_HEIGHT = "nav_bar_height"
+
+    val NAV_COLOR_ENABLED = "nav_color_enabled"
 }

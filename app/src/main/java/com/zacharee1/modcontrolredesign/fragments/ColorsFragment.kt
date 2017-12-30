@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.graphics.Color
 import android.preference.PreferenceFragment
 import android.preference.PreferenceManager
+import android.preference.SwitchPreference
 import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
 import com.jaredrummler.android.colorpicker.ColorPreference
@@ -22,6 +23,7 @@ class ColorsFragment : PreferenceFragment() {
         setQTColors()
         setSigColors()
         setNavBarColors()
+        setUpEnableDisableNavBarColor()
     }
 
     private fun setQTColors() {
@@ -126,6 +128,24 @@ class ColorsFragment : PreferenceFragment() {
                 Settings.Global.putInt(activity.contentResolver, baseKeyBlue + i, blue)
                 true
             }
+        }
+    }
+
+    private fun setUpEnableDisableNavBarColor() {
+        val navPref = findPreference("nav_0") as ColorPreference
+        val enablePref = findPreference("enable_nav_color") as SwitchPreference
+
+        val isEnabled = Settings.Global.getInt(activity.contentResolver, Stuff.NAV_COLOR_ENABLED, 0) != 0
+
+        navPref.isEnabled = isEnabled
+        enablePref.isChecked = isEnabled
+
+        enablePref.setOnPreferenceChangeListener { preference, any ->
+            val enabled = java.lang.Boolean.valueOf(any.toString())
+
+            Settings.Global.putInt(activity.contentResolver, Stuff.NAV_COLOR_ENABLED, if (enabled) 1 else 0)
+            navPref.isEnabled = enabled
+            true
         }
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:title="@string/status_bar"
@@ -16,6 +17,26 @@
         <SwitchPreference
             android:title="@string/aospsignal"
             android:key="aospsignal" />
+
+        <com.zacharee1.sliderpreferenceembedded.SliderPreferenceEmbedded
+            android:title="@string/statbar_size"
+            app:seek_max="48"
+            app:show_popup="false"
+            app:show_text="true"
+            android:key="status_bar_height" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/navbar"
+        android:key="navigation_bar">
+
+        <com.zacharee1.sliderpreferenceembedded.SliderPreferenceEmbedded
+            android:title="@string/navbar_size"
+            app:seek_max="84"
+            app:show_popup="false"
+            app:show_text="true"
+            android:key="nav_bar_height" />
 
     </PreferenceCategory>
 

@@ -1,18 +1,16 @@
 package com.zacharee1.modcontrolredesign.fragments
 
 import android.os.Bundle
-import android.preference.EditTextPreference
 import android.preference.PreferenceCategory
 import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import com.zacharee1.modcontrolredesign.R
 import com.zacharee1.modcontrolredesign.util.Stuff
 import com.zacharee1.modcontrolredesign.util.BuildProp
 import com.zacharee1.modcontrolredesign.util.SuUtils
-import java.lang.Exception
+import com.zacharee1.sliderpreferenceembedded.SliderPreferenceEmbedded
 
 class OthersFragment : PreferenceFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +20,7 @@ class OthersFragment : PreferenceFragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setSwitchListeners()
+        setSliderListeners()
     }
 
     private fun setSwitchListeners() {
@@ -129,6 +128,24 @@ class OthersFragment : PreferenceFragment() {
         wakeonplugSwitch.setOnPreferenceChangeListener { _, any ->
             val newVal = java.lang.Boolean.valueOf(any.toString())
             Settings.Global.putInt(activity.contentResolver, Stuff.WAKE_ON_PLUG, if (newVal) 1 else 0)
+            true
+        }
+    }
+
+    private fun setSliderListeners() {
+        val statBarSize = findPreference("status_bar_height") as SliderPreferenceEmbedded
+        val navBarSize = findPreference("nav_bar_height") as SliderPreferenceEmbedded
+
+        statBarSize.progress = Settings.Global.getInt(activity.contentResolver, Stuff.STATUS_BAR_HEIGHT, 24)
+        navBarSize.progress = Settings.Global.getInt(activity.contentResolver, Stuff.NAV_BAR_HEIGHT, 42)
+
+        statBarSize.setOnPreferenceChangeListener { preference, any ->
+            Settings.Global.putInt(activity.contentResolver, Stuff.STATUS_BAR_HEIGHT, Integer.valueOf(any.toString()))
+            true
+        }
+
+        navBarSize.setOnPreferenceChangeListener { preference, any ->
+            Settings.Global.putInt(activity.contentResolver, Stuff.NAV_BAR_HEIGHT, Integer.valueOf(any.toString()))
             true
         }
     }

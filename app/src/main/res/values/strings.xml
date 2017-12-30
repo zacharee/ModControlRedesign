@@ -48,6 +48,11 @@
     <string name="status_bar">Status Bar</string>
     <string name="aod">AOD</string>
     <string name="immersive">Immersive Status Bar</string>
+    <string name="navbar">Navigation Bar</string>
+    <string name="enable">Enable</string>
+
+    <string name="statbar_size">Status Bar Size</string>
+    <string name="navbar_size">Navigation Bar Size</string>
 
     <string name="grant_perm_message">
         Please grant the following permission to com.zacharee1.modcontrolredesign:\n\nandroid.permission.WRITE_SECURE_SETTINGS
