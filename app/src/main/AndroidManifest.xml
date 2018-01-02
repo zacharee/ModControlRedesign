@@ -12,13 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Dark">
 
-        <activity android:name=".StarterActivity">
+        <activity android:name=".StarterActivity" />
+        <activity-alias
+            android:name=".LauncherActivity"
+            android:targetActivity=".StarterActivity"
+            android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity-alias>
     </application>
 
 </manifest>

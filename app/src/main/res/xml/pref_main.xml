@@ -43,7 +43,11 @@
             android:summary="@string/dark_mode_summary"
             android:key="dark_mode" />
 
-    </PreferenceCategory>
+        <SwitchPreference
+            android:title="Launcher Icon"
+            android:summary="Show icon in launcher to open Mod Control"
+            android:key="show_launcher" />
 
+    </PreferenceCategory>
 
 </PreferenceScreen>

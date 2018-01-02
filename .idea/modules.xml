@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ModControlRedesign.iml" filepath="$PROJECT_DIR$/.idea/ModControlRedesign.iml" />
-      <module fileurl="file://D:\StudioProjects\ModControlRedesign\ModControlRedesign.iml" filepath="D:\StudioProjects\ModControlRedesign\ModControlRedesign.iml" />
+      <module fileurl="file://D:/StudioProjects/ModControlRedesign/ModControlRedesign.iml" filepath="D:/StudioProjects/ModControlRedesign/ModControlRedesign.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

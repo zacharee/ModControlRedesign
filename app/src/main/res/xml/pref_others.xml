@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:title="@string/status_bar"
+        android:title=  "@string/status_bar"
         android:key="statbar">
 
         <SwitchPreference
@@ -37,6 +37,13 @@
             app:show_popup="false"
             app:show_text="true"
             android:key="nav_bar_height" />
+
+        <com.zacharee1.sliderpreferenceembedded.SliderPreferenceEmbedded
+            android:title="@string/navbar_button_padding"
+            app:seek_max="16"
+            app:show_popup="false"
+            app:show_text="true"
+            android:key="nav_bar_button_padding" />
 
     </PreferenceCategory>
 

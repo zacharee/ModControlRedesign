@@ -28,6 +28,7 @@ object Stuff {
 
     val STATUS_BAR_HEIGHT = "status_bar_height"
     val NAV_BAR_HEIGHT = "nav_bar_height"
+    val NAV_BAR_BUTTON_PADDING = "nav_bar_button_padding"
 
     val NAV_COLOR_ENABLED = "nav_color_enabled"
 }

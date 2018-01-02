@@ -135,9 +135,11 @@ class OthersFragment : PreferenceFragment() {
     private fun setSliderListeners() {
         val statBarSize = findPreference("status_bar_height") as SliderPreferenceEmbedded
         val navBarSize = findPreference("nav_bar_height") as SliderPreferenceEmbedded
+        val navBarButtonPadding = findPreference("nav_bar_button_padding") as SliderPreferenceEmbedded
 
         statBarSize.progress = Settings.Global.getInt(activity.contentResolver, Stuff.STATUS_BAR_HEIGHT, 24)
         navBarSize.progress = Settings.Global.getInt(activity.contentResolver, Stuff.NAV_BAR_HEIGHT, 42)
+        navBarButtonPadding.progress = Settings.Global.getInt(activity.contentResolver, Stuff.NAV_BAR_BUTTON_PADDING, 0)
 
         statBarSize.setOnPreferenceChangeListener { preference, any ->
             Settings.Global.putInt(activity.contentResolver, Stuff.STATUS_BAR_HEIGHT, Integer.valueOf(any.toString()))
@@ -146,6 +148,11 @@ class OthersFragment : PreferenceFragment() {
 
         navBarSize.setOnPreferenceChangeListener { preference, any ->
             Settings.Global.putInt(activity.contentResolver, Stuff.NAV_BAR_HEIGHT, Integer.valueOf(any.toString()))
+            true
+        }
+
+        navBarButtonPadding.setOnPreferenceChangeListener { preference, any ->
+            Settings.Global.putInt(activity.contentResolver, Stuff.NAV_BAR_BUTTON_PADDING, Integer.valueOf(any.toString()))
             true
         }
     }

@@ -1,5 +1,7 @@
 package com.zacharee1.modcontrolredesign.fragments
 
+import android.content.ComponentName
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.preference.ListPreference
@@ -51,6 +53,20 @@ public class MainFragment : PreferenceFragment() {
         val darkMode = findPreference("dark_mode") as SwitchPreference
         darkMode.setOnPreferenceChangeListener { _, _ ->
             activity.recreate()
+            true
+        }
+
+        val showLauncher = findPreference("show_launcher") as SwitchPreference
+        showLauncher.setOnPreferenceChangeListener { preference, any ->
+            context.applicationContext.packageManager.setComponentEnabledSetting(
+                    ComponentName(context.packageName,
+                            context.packageName + ".LauncherActivity"),
+                    if (java.lang.Boolean.valueOf(any.toString()))
+                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                    else
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP
+            )
             true
         }
     }
