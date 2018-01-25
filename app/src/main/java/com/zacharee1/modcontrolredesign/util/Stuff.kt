@@ -31,4 +31,5 @@ object Stuff {
     val NAV_BAR_BUTTON_PADDING = "nav_bar_button_padding"
 
     val NAV_COLOR_ENABLED = "nav_color_enabled"
+    val IMMERSIVE_SB_ENABLED = "allow_immersive_statusbar"
 }

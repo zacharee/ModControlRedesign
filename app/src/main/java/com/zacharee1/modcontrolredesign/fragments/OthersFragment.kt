@@ -1,6 +1,8 @@
 package com.zacharee1.modcontrolredesign.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceActivity
 import android.preference.PreferenceCategory
 import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
@@ -38,10 +40,13 @@ class OthersFragment : PreferenceFragment() {
         val slowchargewarn = Settings.Global.getInt(activity.contentResolver, Stuff.CHARGE_WARN, 1)
         val ss_screenshot = BuildProp.readValueOfKey(Stuff.SS_CAPTURE)
 
+        val immersiveSBEnabled = Settings.Global.getInt(activity.contentResolver, Stuff.IMMERSIVE_SB_ENABLED, 1)
+
         if (Stuff.isV20) {
             val minbatimmSwitch = findPreference("minbatimm") as SwitchPreference
             val minclockimmSwitch = findPreference("minclockimm") as SwitchPreference
             val ss_screenshotSwitch = findPreference("sbscreen") as SwitchPreference
+            val immersiveSB = findPreference(Stuff.IMMERSIVE_SB_ENABLED) as SwitchPreference
 
             minbatimmSwitch.isChecked = minbatimm == 1
             minbatimmSwitch.setOnPreferenceChangeListener { _, any ->
@@ -61,6 +66,12 @@ class OthersFragment : PreferenceFragment() {
             ss_screenshotSwitch.setOnPreferenceChangeListener { _, any ->
                 val newVal = any.toString()
                 BuildProp.setValueForKey(Stuff.SS_CAPTURE, newVal)
+                true
+            }
+
+            immersiveSB.isChecked = immersiveSBEnabled == 1
+            immersiveSB.setOnPreferenceChangeListener { _, any ->
+                Settings.Global.putInt(activity.contentResolver, Stuff.IMMERSIVE_SB_ENABLED, if (any.toString().toBoolean()) 1 else 0)
                 true
             }
         } else {
@@ -128,6 +139,16 @@ class OthersFragment : PreferenceFragment() {
         wakeonplugSwitch.setOnPreferenceChangeListener { _, any ->
             val newVal = java.lang.Boolean.valueOf(any.toString())
             Settings.Global.putInt(activity.contentResolver, Stuff.WAKE_ON_PLUG, if (newVal) 1 else 0)
+            true
+        }
+
+        val forceBasicInfo = Settings.Global.getInt(context.contentResolver, "force_show_basic_info", 1) == 1
+        val forceBasicInfoSwitch = findPreference("force_basic_info") as SwitchPreference
+
+        forceBasicInfoSwitch.isChecked = forceBasicInfo
+        forceBasicInfoSwitch.setOnPreferenceChangeListener { _, any ->
+            val newVal = any.toString().toBoolean()
+            Settings.Global.putInt(context.contentResolver, "force_show_basic_info", if (newVal) 1 else 0)
             true
         }
     }

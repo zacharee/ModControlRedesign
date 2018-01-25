@@ -60,11 +60,21 @@
             android:summary="@string/bat_aod_warn"
             android:key="minclockaod" />
 
+        <SwitchPreference
+            android:title="@string/force_basic_info"
+            android:key="force_basic_info"
+            android:defaultValue="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/immersive"
         android:key="immersive">
+
+        <SwitchPreference
+            android:title="@string/enable"
+            android:key="allow_immersive_statusbar"
+            android:defaultValue="true"/>
 
         <SwitchPreference
             android:title="@string/minbatimm"

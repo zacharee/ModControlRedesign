@@ -58,7 +58,7 @@
     <string name="grant_perm_message">
         Please grant the following permission to com.zacharee1.modcontrolredesign:\n\nandroid.permission.WRITE_SECURE_SETTINGS
     </string>
-    <string name="unsupported_device">Your device (%s) is unsupported. You need either an LG V20 (%s) or LG G5 (%s) to use this app.</string>
+    <string name="unsupported_device">Your device, (%s), is unsupported. You need either an LG V20 (%s) or LG G5 (%s) to use this app.</string>
 
     <string-array name="device_arr_display">
         <item>V20</item>
@@ -68,4 +68,6 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+
+    <string name="force_basic_info">Force Back to First Screen</string>
 </resources>

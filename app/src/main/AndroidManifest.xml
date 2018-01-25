@@ -11,12 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Dark">
-
         <activity android:name=".StarterActivity" />
+
         <activity-alias
             android:name=".LauncherActivity"
-            android:targetActivity=".StarterActivity"
-            android:enabled="false">
+            android:enabled="false"
+            android:targetActivity=".StarterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
