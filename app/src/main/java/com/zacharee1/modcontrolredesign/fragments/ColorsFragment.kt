@@ -2,8 +2,8 @@ package com.zacharee1.modcontrolredesign.fragments
 
 import android.os.Bundle
 import android.graphics.Color
+import android.preference.Preference
 import android.preference.PreferenceFragment
-import android.preference.PreferenceManager
 import android.preference.SwitchPreference
 import android.provider.Settings
 import android.support.v7.app.AppCompatActivity
@@ -23,7 +23,8 @@ class ColorsFragment : PreferenceFragment() {
         setQTColors()
         setSigColors()
         setNavBarColors()
-        setUpEnableDisableNavBarColor()
+        setUpEnableDisableNavBarButtonColor()
+        setUpBarColors()
     }
 
     private fun setQTColors() {
@@ -131,7 +132,7 @@ class ColorsFragment : PreferenceFragment() {
         }
     }
 
-    private fun setUpEnableDisableNavBarColor() {
+    private fun setUpEnableDisableNavBarButtonColor() {
         val navPref = findPreference("nav_0") as ColorPreference
         val enablePref = findPreference("enable_nav_color") as SwitchPreference
 
@@ -147,5 +148,65 @@ class ColorsFragment : PreferenceFragment() {
             navPref.isEnabled = enabled
             true
         }
+    }
+
+    private fun setUpBarColors() {
+        val opaque = findPreference("nav_bar_color_opaque") as ColorPreference
+        val semiTrans = findPreference("nav_bar_color_semi_transparent") as ColorPreference
+        val trans = findPreference("nav_bar_color_transparent") as ColorPreference
+
+        val forceOpaque = findPreference("force_nav_bar_color") as SwitchPreference
+
+        val resetO = findPreference("reset_nav_bar_color_opaque")
+        val resetS = findPreference("reset_nav_bar_color_semi_transparent")
+        val resetT = findPreference("reset_nav_bar_color_transparent")
+
+        val savedOpaque = Settings.Global.getInt(context.contentResolver, "nav_bar_color_opaque", Color.BLACK)
+        val savedSemi = Settings.Global.getInt(context.contentResolver, "nav_bar_color_semi_transparent", Color.parseColor("#66000000"))
+        val savedTransparent = Settings.Global.getInt(context.contentResolver, "nav_bar_color_transparent", Color.TRANSPARENT)
+
+        opaque.saveValue(savedOpaque)
+        semiTrans.saveValue(savedSemi)
+        trans.saveValue(savedTransparent)
+
+        val listener = Preference.OnPreferenceChangeListener { preference, newValue ->
+            Settings.Global.putInt(context.contentResolver, preference.key, newValue.toString().toInt())
+            true
+        }
+
+        opaque.onPreferenceChangeListener = listener
+        semiTrans.onPreferenceChangeListener = listener
+        trans.onPreferenceChangeListener = listener
+
+        val savedForce = Settings.Global.getInt(context.contentResolver, "force_nav_bar_color", 0) != 0
+
+        forceOpaque.isChecked = savedForce
+
+        forceOpaque.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+            var toSave = 0
+            if (newValue.toString().toBoolean()) {
+                toSave = 1
+            }
+
+            Settings.Global.putInt(context.contentResolver, preference.key, toSave)
+            true
+        }
+
+        val resetListener = Preference.OnPreferenceClickListener { preference ->
+            val key = preference.key.replace("reset_", "")
+            Settings.Global.putString(context.contentResolver, key, null)
+
+            when {
+                key.contains("opaque") -> opaque.saveValue(Color.BLACK)
+                key.contains("semi") -> semiTrans.saveValue(Color.parseColor("#66000000"))
+                else -> trans.saveValue(Color.TRANSPARENT)
+            }
+
+            true
+        }
+
+        resetO.onPreferenceClickListener = resetListener
+        resetS.onPreferenceClickListener = resetListener
+        resetT.onPreferenceClickListener = resetListener
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:title="@string/quicktools_colors_title"
@@ -66,8 +67,45 @@
             android:key="enable_nav_color" />
 
         <com.jaredrummler.android.colorpicker.ColorPreference
-            android:title="@string/navbar_color"
+            android:title="@string/navbar_button_color"
             android:key="nav_0" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/navbar_statbar_color"
+        android:key="navbar_statbar">
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/opaque_color"
+            android:key="nav_bar_color_opaque"
+            app:cpv_showAlphaSlider="true"/>
+
+        <SwitchPreference
+            android:title="@string/force_opaque"
+            android:key="force_nav_bar_color" />
+
+        <Preference
+            android:title="@string/reset"
+            android:key="reset_nav_bar_color_opaque" />
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/semi_transparent_color"
+            android:key="nav_bar_color_semi_transparent"
+            app:cpv_showAlphaSlider="true"/>
+
+        <Preference
+            android:title="@string/reset"
+            android:key="reset_nav_bar_color_semi_transparent" />
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/transparent_color"
+            android:key="nav_bar_color_transparent"
+            app:cpv_showAlphaSlider="true"/>
+
+        <Preference
+            android:title="@string/reset"
+            android:key="reset_nav_bar_color_transparent" />
 
     </PreferenceCategory>
 

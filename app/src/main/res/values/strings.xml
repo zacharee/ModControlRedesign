@@ -7,7 +7,7 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="signature_color">Signature Color</string>
     <string name="aod_signature_color">AOD Signature Color</string>
-    <string name="navbar_color">NavBar Button Color</string>
+    <string name="navbar_button_color">NavBar Button Color</string>
     <string name="qt_1">First Toggle</string>
     <string name="qt_2">Second Toggle</string>
     <string name="qt_3">Third Toggle</string>
@@ -70,4 +70,10 @@
     </string-array>
 
     <string name="force_basic_info">Force Back to First Screen</string>
+    <string name="navbar_statbar_color">Navigation/Status Bar</string>
+    <string name="opaque_color">Opaque</string>
+    <string name="semi_transparent_color">Semi-Transparent</string>
+    <string name="transparent_color">Transparent</string>
+    <string name="reset">Reset</string>
+    <string name="force_opaque">Force Use of Opaque Color</string>
 </resources>
