@@ -63,27 +63,24 @@
         android:key="navbar">
 
         <SwitchPreference
-            android:title="@string/enable"
+            android:title="@string/enable_button_coloring"
             android:key="enable_nav_color" />
 
         <com.jaredrummler.android.colorpicker.ColorPreference
             android:title="@string/navbar_button_color"
             android:key="nav_0" />
 
-    </PreferenceCategory>
+        <Preference
+            android:enabled="false" />
 
-    <PreferenceCategory
-        android:title="@string/navbar_statbar_color"
-        android:key="navbar_statbar">
+        <SwitchPreference
+            android:title="@string/force_opaque"
+            android:key="force_nav_bar_color" />
 
         <com.jaredrummler.android.colorpicker.ColorPreference
             android:title="@string/opaque_color"
             android:key="nav_bar_color_opaque"
             app:cpv_showAlphaSlider="true"/>
-
-        <SwitchPreference
-            android:title="@string/force_opaque"
-            android:key="force_nav_bar_color" />
 
         <Preference
             android:title="@string/reset"
@@ -106,6 +103,43 @@
         <Preference
             android:title="@string/reset"
             android:key="reset_nav_bar_color_transparent" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/status_bar"
+        android:key="statbar">
+
+        <SwitchPreference
+            android:title="@string/force_opaque"
+            android:key="force_stat_bar_color" />
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/opaque_color"
+            android:key="stat_bar_color_opaque"
+            app:cpv_showAlphaSlider="true"/>
+
+        <Preference
+            android:title="@string/reset"
+            android:key="reset_stat_bar_color_opaque" />
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/semi_transparent_color"
+            android:key="stat_bar_color_semi_transparent"
+            app:cpv_showAlphaSlider="true"/>
+
+        <Preference
+            android:title="@string/reset"
+            android:key="reset_stat_bar_color_semi_transparent" />
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:title="@string/transparent_color"
+            android:key="stat_bar_color_transparent"
+            app:cpv_showAlphaSlider="true"/>
+
+        <Preference
+            android:title="@string/reset"
+            android:key="reset_stat_bar_color_transparent" />
 
     </PreferenceCategory>
 

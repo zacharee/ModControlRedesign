@@ -155,19 +155,37 @@ class ColorsFragment : PreferenceFragment() {
         val semiTrans = findPreference("nav_bar_color_semi_transparent") as ColorPreference
         val trans = findPreference("nav_bar_color_transparent") as ColorPreference
 
+        val opS = findPreference("stat_bar_color_opaque") as ColorPreference
+        val stS = findPreference("stat_bar_color_semi_transparent") as ColorPreference
+        val trS = findPreference("stat_bar_color_transparent") as ColorPreference
+
         val forceOpaque = findPreference("force_nav_bar_color") as SwitchPreference
+
+        val forceOpS = findPreference("force_stat_bar_color") as SwitchPreference
 
         val resetO = findPreference("reset_nav_bar_color_opaque")
         val resetS = findPreference("reset_nav_bar_color_semi_transparent")
         val resetT = findPreference("reset_nav_bar_color_transparent")
 
+        val resOS = findPreference("reset_stat_bar_color_opaque")
+        val resSS = findPreference("reset_stat_bar_color_semi_transparent")
+        val resTS = findPreference("reset_stat_bar_color_transparent")
+
         val savedOpaque = Settings.Global.getInt(context.contentResolver, "nav_bar_color_opaque", Color.BLACK)
         val savedSemi = Settings.Global.getInt(context.contentResolver, "nav_bar_color_semi_transparent", Color.parseColor("#66000000"))
         val savedTransparent = Settings.Global.getInt(context.contentResolver, "nav_bar_color_transparent", Color.TRANSPARENT)
 
+        val savedOS = Settings.Global.getInt(context.contentResolver, "stat_bar_color_opaque", Color.BLACK)
+        val savedSS = Settings.Global.getInt(context.contentResolver, "stat_bar_color_semi_transparent", Color.parseColor("#66000000"))
+        val savedTS = Settings.Global.getInt(context.contentResolver, "stat_bar_color_transparent", Color.TRANSPARENT)
+
         opaque.saveValue(savedOpaque)
         semiTrans.saveValue(savedSemi)
         trans.saveValue(savedTransparent)
+
+        opS.saveValue(savedOS)
+        stS.saveValue(savedSS)
+        trS.saveValue(savedTS)
 
         val listener = Preference.OnPreferenceChangeListener { preference, newValue ->
             Settings.Global.putInt(context.contentResolver, preference.key, newValue.toString().toInt())
@@ -178,11 +196,19 @@ class ColorsFragment : PreferenceFragment() {
         semiTrans.onPreferenceChangeListener = listener
         trans.onPreferenceChangeListener = listener
 
+        opS.onPreferenceChangeListener = listener
+        stS.onPreferenceChangeListener = listener
+        trS.onPreferenceChangeListener = listener
+
         val savedForce = Settings.Global.getInt(context.contentResolver, "force_nav_bar_color", 0) != 0
+
+        val savedFS = Settings.Global.getInt(context.contentResolver, "force_stat_bar_color", 0) != 0
 
         forceOpaque.isChecked = savedForce
 
-        forceOpaque.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+        forceOpS.isChecked = savedFS
+
+        val forceListener = Preference.OnPreferenceChangeListener { preference, newValue ->
             var toSave = 0
             if (newValue.toString().toBoolean()) {
                 toSave = 1
@@ -192,14 +218,32 @@ class ColorsFragment : PreferenceFragment() {
             true
         }
 
+        forceOpaque.onPreferenceChangeListener = forceListener
+
+        forceOpS.onPreferenceChangeListener = forceListener
+
         val resetListener = Preference.OnPreferenceClickListener { preference ->
             val key = preference.key.replace("reset_", "")
             Settings.Global.putString(context.contentResolver, key, null)
 
-            when {
-                key.contains("opaque") -> opaque.saveValue(Color.BLACK)
-                key.contains("semi") -> semiTrans.saveValue(Color.parseColor("#66000000"))
-                else -> trans.saveValue(Color.TRANSPARENT)
+            if (key.contains("opaque")) {
+                if (key.contains("nav")) {
+                    opaque.saveValue(Color.BLACK)
+                } else {
+                    opS.saveValue(Color.BLACK)
+                }
+            } else if (key.contains("semi")) {
+                if (key.contains("nav")) {
+                    semiTrans.saveValue(Color.parseColor("#66000000"))
+                } else {
+                    stS.saveValue(Color.parseColor("#66000000"))
+                }
+            } else {
+                if (key.contains("nav")) {
+                    trans.saveValue(Color.TRANSPARENT)
+                } else {
+                    trS.saveValue(Color.TRANSPARENT)
+                }
             }
 
             true
@@ -208,5 +252,9 @@ class ColorsFragment : PreferenceFragment() {
         resetO.onPreferenceClickListener = resetListener
         resetS.onPreferenceClickListener = resetListener
         resetT.onPreferenceClickListener = resetListener
+
+        resOS.onPreferenceClickListener = resetListener
+        resSS.onPreferenceClickListener = resetListener
+        resTS.onPreferenceClickListener = resetListener
     }
 }
