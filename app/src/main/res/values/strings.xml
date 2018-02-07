@@ -76,4 +76,7 @@
     <string name="reset">Reset</string>
     <string name="force_opaque">Force Use of Opaque Color</string>
     <string name="enable_button_coloring">Enable Button Coloring</string>
+    <string name="second_screen">Second Screen</string>
+
+    <string name="show_home_screen_widgets">Show Home Screen Widgets In Settings</string>
 </resources>

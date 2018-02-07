@@ -38,7 +38,7 @@ class StarterActivity : AppCompatActivity() {
         } catch (e: Exception) {
             if (SuUtils.testSudo()) {
                 try {
-                    SuUtils.sudo(Array(1) { "pm grant com.zacharee1.modcontrolredesign android.permission.WRITE_SECURE_SETTINGS" })
+                    SuUtils.sudo("pm grant com.zacharee1.modcontrolredesign android.permission.WRITE_SECURE_SETTINGS")
                     goHome()
                 } catch (e: Exception) {
                     e.printStackTrace()

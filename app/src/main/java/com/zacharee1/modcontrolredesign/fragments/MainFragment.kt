@@ -28,13 +28,13 @@ public class MainFragment : PreferenceFragment() {
 
         val restartSystemUI = findPreference("restart_sysui")
         restartSystemUI.setOnPreferenceClickListener {
-            SuUtils.sudo(Array(1) {"killall com.android.systemui"})
+            SuUtils.sudo("killall com.android.systemui")
             true
         }
 
         val hotReboot = findPreference("hot_reboot")
         hotReboot.setOnPreferenceClickListener {
-            SuUtils.sudo(Array(1) {"killall system_server"})
+            SuUtils.sudo("killall system_server")
             true
         }
 

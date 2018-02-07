@@ -38,15 +38,18 @@ class OthersFragment : PreferenceFragment() {
 
         val wakeonplug = Settings.Global.getInt(activity.contentResolver, Stuff.WAKE_ON_PLUG, 1)
         val slowchargewarn = Settings.Global.getInt(activity.contentResolver, Stuff.CHARGE_WARN, 1)
-        val ss_screenshot = BuildProp.readValueOfKey(Stuff.SS_CAPTURE)
+        val ssScreenshot = BuildProp.readValueOfKey(Stuff.SS_CAPTURE)
+
+        val homeWidgetsInSettings = Settings.Global.getInt(activity.contentResolver, Stuff.ALLOW_HOME_SCREEN_WIDGETS, 0)
 
         val immersiveSBEnabled = Settings.Global.getInt(activity.contentResolver, Stuff.IMMERSIVE_SB_ENABLED, 1)
 
         if (Stuff.isV20) {
             val minbatimmSwitch = findPreference("minbatimm") as SwitchPreference
             val minclockimmSwitch = findPreference("minclockimm") as SwitchPreference
-            val ss_screenshotSwitch = findPreference("sbscreen") as SwitchPreference
+            val ssScreenshotSwitch = findPreference("sbscreen") as SwitchPreference
             val immersiveSB = findPreference(Stuff.IMMERSIVE_SB_ENABLED) as SwitchPreference
+            val homeWidgetsInSettignsSwitch = findPreference(Stuff.ALLOW_HOME_SCREEN_WIDGETS) as SwitchPreference
 
             minbatimmSwitch.isChecked = minbatimm == 1
             minbatimmSwitch.setOnPreferenceChangeListener { _, any ->
@@ -62,8 +65,8 @@ class OthersFragment : PreferenceFragment() {
                 true
             }
 
-            ss_screenshotSwitch.isChecked = ss_screenshot == "true"
-            ss_screenshotSwitch.setOnPreferenceChangeListener { _, any ->
+            ssScreenshotSwitch.isChecked = ssScreenshot?.contains("true")
+            ssScreenshotSwitch.setOnPreferenceChangeListener { _, any ->
                 val newVal = any.toString()
                 BuildProp.setValueForKey(Stuff.SS_CAPTURE, newVal)
                 true
@@ -72,6 +75,12 @@ class OthersFragment : PreferenceFragment() {
             immersiveSB.isChecked = immersiveSBEnabled == 1
             immersiveSB.setOnPreferenceChangeListener { _, any ->
                 Settings.Global.putInt(activity.contentResolver, Stuff.IMMERSIVE_SB_ENABLED, if (any.toString().toBoolean()) 1 else 0)
+                true
+            }
+
+            homeWidgetsInSettignsSwitch.isChecked = homeWidgetsInSettings == 1
+            homeWidgetsInSettignsSwitch.setOnPreferenceChangeListener { _, any ->
+                Settings.Global.putInt(activity.contentResolver, Stuff.ALLOW_HOME_SCREEN_WIDGETS, if (any.toString().toBoolean()) 1 else 0)
                 true
             }
         } else {
@@ -103,7 +112,7 @@ class OthersFragment : PreferenceFragment() {
         aospsignalSwitch.setOnPreferenceChangeListener { _, any ->
             val newVal = java.lang.Boolean.valueOf(any.toString())
             Settings.Global.putInt(activity.contentResolver, Stuff.STOCK_SIGNAL, if (newVal) 0 else 1)
-            SuUtils.sudo(Array(1) {"killall com.android.systemui"})
+            SuUtils.sudo("killall com.android.systemui")
             true
         }
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:title=  "@string/status_bar"
+        android:title="@string/status_bar"
         android:key="statbar">
 
         <SwitchPreference
@@ -44,6 +44,16 @@
             app:show_popup="false"
             app:show_text="true"
             android:key="nav_bar_button_padding" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/second_screen"
+        android:key="signboard">
+
+        <SwitchPreference
+            android:title="@string/show_home_screen_widgets"
+            android:key="allow_home_screen_widgets" />
 
     </PreferenceCategory>
 
