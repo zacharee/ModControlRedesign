@@ -50,6 +50,12 @@ public class MainFragment : PreferenceFragment() {
             true
         }
 
+        val openPower = findPreference("power_menu")
+        openPower.setOnPreferenceClickListener {
+            activity.fragmentManager.beginTransaction().replace(R.id.content_main, PowerFragment()).commit()
+            true
+        }
+
         val darkMode = findPreference("dark_mode") as SwitchPreference
         darkMode.setOnPreferenceChangeListener { _, _ ->
             activity.recreate()

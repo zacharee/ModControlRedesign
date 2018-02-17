@@ -65,7 +65,7 @@ class OthersFragment : PreferenceFragment() {
                 true
             }
 
-            ssScreenshotSwitch.isChecked = ssScreenshot?.contains("true")
+            ssScreenshotSwitch.isChecked = ssScreenshot.contains("true")
             ssScreenshotSwitch.setOnPreferenceChangeListener { _, any ->
                 val newVal = any.toString()
                 BuildProp.setValueForKey(Stuff.SS_CAPTURE, newVal)
@@ -171,17 +171,17 @@ class OthersFragment : PreferenceFragment() {
         navBarSize.progress = Settings.Global.getInt(activity.contentResolver, Stuff.NAV_BAR_HEIGHT, 42)
         navBarButtonPadding.progress = Settings.Global.getInt(activity.contentResolver, Stuff.NAV_BAR_BUTTON_PADDING, 0)
 
-        statBarSize.setOnPreferenceChangeListener { preference, any ->
+        statBarSize.setOnPreferenceChangeListener { _, any ->
             Settings.Global.putInt(activity.contentResolver, Stuff.STATUS_BAR_HEIGHT, Integer.valueOf(any.toString()))
             true
         }
 
-        navBarSize.setOnPreferenceChangeListener { preference, any ->
+        navBarSize.setOnPreferenceChangeListener { _, any ->
             Settings.Global.putInt(activity.contentResolver, Stuff.NAV_BAR_HEIGHT, Integer.valueOf(any.toString()))
             true
         }
 
-        navBarButtonPadding.setOnPreferenceChangeListener { preference, any ->
+        navBarButtonPadding.setOnPreferenceChangeListener { _, any ->
             Settings.Global.putInt(activity.contentResolver, Stuff.NAV_BAR_BUTTON_PADDING, Integer.valueOf(any.toString()))
             true
         }

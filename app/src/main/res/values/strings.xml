@@ -4,6 +4,7 @@
     <string name="device">Device</string>
     <string name="color_mods">Color Mods</string>
     <string name="other_mods">Other Mods</string>
+    <string name="power_mods">Power Menu Mods</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="signature_color">Signature Color</string>
     <string name="aod_signature_color">AOD Signature Color</string>
@@ -36,6 +37,7 @@
     <string name="current_device">Detected Device:</string>
     <string name="color_mods_summary">Change the color of certain elements of the UI.</string>
     <string name="other_mods_summary">Toggle various UI options.</string>
+    <string name="power_mods_summary">Customize the power menu.</string>
     <string name="dark_mode_summary">Use dark theme in app.</string>
     <string name="bat_aod_warn">3Minit Clock won\'t update in the AOD on the V20!</string>
 
@@ -79,4 +81,21 @@
     <string name="second_screen">Second Screen</string>
 
     <string name="show_home_screen_widgets">Show Home Screen Widgets In Settings</string>
+
+    <string name="power">Power Off</string>
+    <string name="reboot">Reboot</string>
+    <string name="recovery">Recovery</string>
+    <string name="airplane">Airplane Mode</string>
+    <string name="settings">Settings</string>
+    <string name="lockdown">Lock Device</string>
+    <string name="bugreport">Capture Bug Report</string>
+    <string name="users">Users</string>
+    <string name="silent">Ringer Volume</string>
+    <string name="assist">Assistant</string>
+    <string name="voiceassist">Voice Assistant</string>
+
+    <string name="enable_aosp_power_menu">AOSP Power Menu</string>
+    <string name="edit_power_buttons">Edit Buttons</string>
+
+    <string name="blank"> </string>
 </resources>

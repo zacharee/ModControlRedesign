@@ -33,6 +33,11 @@
             android:summary="@string/other_mods_summary"
             android:key="other_mods" />
 
+        <Preference
+            android:title="@string/power_mods"
+            android:summary="@string/power_mods_summary"
+            android:key="power_menu" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

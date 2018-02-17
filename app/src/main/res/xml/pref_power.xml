@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:title="@string/enable_aosp_power_menu"
+        android:key="aosp_power_menu"
+        android:defaultValue="true" />
+
+    <Preference
+        android:title="@string/edit_power_buttons"
+        android:key="edit_power_buttons" />
+</PreferenceScreen>

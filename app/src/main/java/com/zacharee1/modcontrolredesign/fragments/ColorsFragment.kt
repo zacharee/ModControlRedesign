@@ -141,7 +141,7 @@ class ColorsFragment : PreferenceFragment() {
         navPref.isEnabled = isEnabled
         enablePref.isChecked = isEnabled
 
-        enablePref.setOnPreferenceChangeListener { preference, any ->
+        enablePref.setOnPreferenceChangeListener { _, any ->
             val enabled = java.lang.Boolean.valueOf(any.toString())
 
             Settings.Global.putInt(activity.contentResolver, Stuff.NAV_COLOR_ENABLED, if (enabled) 1 else 0)
