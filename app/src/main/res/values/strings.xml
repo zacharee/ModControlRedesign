@@ -33,6 +33,7 @@
     <string name="sbscreen">SignBoard in Screenshot</string>
     <string name="restart_sysui">Restart System UI</string>
     <string name="hot_reboot">Hot Reboot</string>
+    <string name="lock_reply">Reply From Lock Screen</string>
 
     <string name="current_device">Detected Device:</string>
     <string name="color_mods_summary">Change the color of certain elements of the UI.</string>
@@ -40,6 +41,7 @@
     <string name="power_mods_summary">Customize the power menu.</string>
     <string name="dark_mode_summary">Use dark theme in app.</string>
     <string name="bat_aod_warn">3Minit Clock won\'t update in the AOD on the V20!</string>
+    <string name="lock_reply_summary">Allow usage of notifications' inline reply function while on the lock screen</string>
 
     <string name="general">General</string>
     <string name="mods">Mods</string>

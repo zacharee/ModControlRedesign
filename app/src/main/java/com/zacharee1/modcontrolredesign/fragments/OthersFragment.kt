@@ -160,6 +160,13 @@ class OthersFragment : PreferenceFragment() {
             Settings.Global.putInt(context.contentResolver, "force_show_basic_info", if (newVal) 1 else 0)
             true
         }
+
+        val lockReplySwitch = findPreference("lock_screen_allow_remote_input") as SwitchPreference
+        lockReplySwitch.isChecked = Settings.Secure.getInt(activity.contentResolver, lockReplySwitch.key, 0) == 1
+        lockReplySwitch.setOnPreferenceChangeListener { _, newValue ->
+            Settings.Secure.putInt(activity.contentResolver, lockReplySwitch.key, if (newValue.toString().toBoolean()) 1 else 0)
+            true
+        }
     }
 
     private fun setSliderListeners() {

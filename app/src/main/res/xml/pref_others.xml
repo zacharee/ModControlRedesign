@@ -112,6 +112,11 @@
             android:title="@string/sbscreen"
             android:key="sbscreen" />
 
+        <SwitchPreference
+            android:title="@string/lock_reply"
+            android:summary="@string/lock_reply_summary"
+            android:key="lock_screen_allow_remote_input" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -11,8 +11,8 @@ android {
         applicationId "com.zacharee1.modcontrolredesign"
         minSdkVersion 24
         targetSdkVersion 27
-        versionCode 8
-        versionName "1.7"
+        versionCode 9
+        versionName "1.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
