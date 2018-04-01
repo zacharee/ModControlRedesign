@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+project.version = 10
+
 android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
@@ -11,8 +13,8 @@ android {
         applicationId "com.zacharee1.modcontrolredesign"
         minSdkVersion 24
         targetSdkVersion 27
-        versionCode 9
-        versionName "1.8"
+        versionCode project.version
+        versionName project.version + ""
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -25,11 +27,15 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:1.2.21"
-    implementation 'com.android.support:appcompat-v7:27.0.2'
-    implementation 'com.android.support:support-v4:27.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:1.2.31"
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:support-v4:27.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.jaredrummler:colorpicker:1.0.1'
     implementation 'com.github.zacharee:SliderPreferenceEmbedded:5bef0529b0'
     implementation 'com.jmedeisis:draglinearlayout:1.1.0'
+    implementation 'org.jsoup:jsoup:1.11.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.4'
 }
