@@ -11,6 +11,7 @@ import android.provider.Settings
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.MenuItem
+import com.android.internal.R.id.date
 import com.zacharee1.modcontrolredesign.fragments.MainFragment
 import com.zacharee1.modcontrolredesign.util.Stuff
 import com.zacharee1.modcontrolredesign.util.SuUtils
@@ -23,6 +24,7 @@ import org.jsoup.Jsoup
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.nio.charset.StandardCharsets
+import java.text.SimpleDateFormat
 import java.util.*
 
 class StarterActivity : AppCompatActivity() {
@@ -99,12 +101,12 @@ class StarterActivity : AppCompatActivity() {
                     try {
                         val currentDate = IOUtils.toString(FileInputStream("/system/mod_version_mdy"), StandardCharsets.UTF_8).split("_")
                         val currentModDate = ModDate()
-                        currentModDate.month = currentDate[0].toInt()
+                        currentModDate.month = currentDate[0].toInt() - 1
                         currentModDate.day = currentDate[1].toInt()
-                        currentModDate.year = currentDate[2].trim().toInt()
+                        currentModDate.year = currentDate[2].trim().toInt() + 2000
 
                         if (currentModDate < it) {
-                            askToUpdate(it.url)
+                            askToUpdate(it.url, it)
                         }
                     } catch (e: FileNotFoundException) {
                         askToInstall(it.url)
@@ -115,29 +117,32 @@ class StarterActivity : AppCompatActivity() {
     }
 
     private fun loadAndParseAsync(): ModDate {
-        val doc = Jsoup.connect("https://forum.xda-developers.com/devdb/project/?id=24902#downloads").followRedirects(true).get()
-        val links = doc.select("td.project_downloads__filename")
+        val doc = Jsoup.connect("https://androidfilehost.com/?w=files&flid=203777&sort_by=date&sort_dir=DESC").followRedirects(true).get()
+        val links = doc.select("div.file-name")
 
         val name = links[0].children()[0].children()[0]
         val date = "([^_]*)_(\\d+)_(\\d+)_(\\d+)\\.zip\\s*$".toRegex().matchEntire(name.text())?.groups!!
 
         val modDate = ModDate()
-        modDate.year = date[4]!!.value.toInt()
-        modDate.month = date[2]!!.value.toInt()
+        modDate.year = date[4]!!.value.toInt() + 2000
+        modDate.month = date[2]!!.value.toInt() - 1
         modDate.day = date[3]!!.value.toInt()
         modDate.url = name.attr("abs:href")
 
         return modDate
     }
 
-    private fun askToUpdate(url: String) {
+    private fun askToUpdate(url: String, date: ModDate) {
+        val dateFormat = SimpleDateFormat("MMMM dd, YYYY", Locale.getDefault())
+
         AlertDialog.Builder(this)
                 .setTitle(R.string.update_available)
-                .setMessage(R.string.update_available_desc)
+                .setMessage(String.format(Locale.getDefault(), resources.getString(R.string.update_available_desc), dateFormat.format(date.time)))
                 .setPositiveButton(android.R.string.yes, { _, _ ->
                     openUrl(url)
                 })
                 .setNegativeButton(android.R.string.no, null)
+                .setCancelable(false)
                 .show()
     }
 
@@ -149,13 +154,13 @@ class StarterActivity : AppCompatActivity() {
                     openUrl(url)
                 })
                 .setNegativeButton(android.R.string.no, null)
+                .setCancelable(false)
                 .show()
     }
 
     private fun openUrl(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        intent.`package` = "com.android.chrome"
         startActivity(intent)
     }
 
