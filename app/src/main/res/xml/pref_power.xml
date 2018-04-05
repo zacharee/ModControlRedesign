@@ -6,6 +6,11 @@
         android:key="aosp_power_menu"
         android:defaultValue="true" />
 
+    <SwitchPreference
+        android:title="@string/power_confirm"
+        android:key="should_confirm_poweroff"
+        android:defaultValue="true" />
+
     <Preference
         android:title="@string/edit_power_buttons"
         android:key="edit_power_buttons" />

@@ -41,7 +41,7 @@
     <string name="power_mods_summary">Customize the power menu.</string>
     <string name="dark_mode_summary">Use dark theme in app.</string>
     <string name="bat_aod_warn">3Minit Clock won\'t update in the AOD on the V20!</string>
-    <string name="lock_reply_summary">Allow usage of notifications' inline reply function while on the lock screen</string>
+    <string name="lock_reply_summary">Allow usage of notifications\' inline reply function while on the lock screen</string>
 
     <string name="general">General</string>
     <string name="mods">Mods</string>
@@ -58,6 +58,7 @@
     <string name="statbar_size">Status Bar Size</string>
     <string name="navbar_size">Navigation Bar Size</string>
     <string name="navbar_button_padding">Navigation Bar Button Padding</string>
+    <string name="power_confirm">Confirm Power-Off/Reboot</string>
 
     <string name="grant_perm_message">
         Please grant the following permission to com.zacharee1.modcontrolredesign:\n\nandroid.permission.WRITE_SECURE_SETTINGS

@@ -31,6 +31,12 @@ class PowerFragment : PreferenceFragment() {
             Settings.Global.putInt(context.contentResolver, pref.key, if (newValue.toString().toBoolean()) 1 else 0)
         }
         aospPower.isChecked = Settings.Global.getInt(context.contentResolver, aospPower.key, 1) != 0
+
+        val confirmPower = findPreference("should_confirm_poweroff") as SwitchPreference
+        confirmPower.setOnPreferenceChangeListener { preference, newValue ->
+            Settings.Global.putInt(context.contentResolver, preference.key, if (newValue.toString().toBoolean()) 1 else 0)
+        }
+        confirmPower.isChecked = Settings.Global.getInt(context.contentResolver, confirmPower.key, 1) != 0
     }
 
     private fun setClickListeners() {
