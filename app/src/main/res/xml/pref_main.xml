@@ -17,6 +17,10 @@
             android:title="@string/hot_reboot"
             android:key="hot_reboot" />
 
+        <Preference
+            android:title="@string/check_for_updates"
+            android:key="check_for_updates" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

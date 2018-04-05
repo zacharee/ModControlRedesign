@@ -1,16 +1,21 @@
 package com.zacharee1.modcontrolredesign
 
-import android.content.DialogInterface
-import android.content.Intent
+import android.Manifest
+import android.app.Activity
+import android.app.DownloadManager
+import android.content.*
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.preference.PreferenceManager
 import android.provider.Settings
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import com.android.internal.R.id.date
 import com.zacharee1.modcontrolredesign.fragments.MainFragment
 import com.zacharee1.modcontrolredesign.util.Stuff
@@ -20,14 +25,24 @@ import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.apache.commons.io.IOUtils
+import org.json.JSONObject
 import org.jsoup.Jsoup
+import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
+import java.io.InputStream
+import java.net.URL
 import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.*
 
 class StarterActivity : AppCompatActivity() {
+    companion object {
+        const val REQ = 1001
+    }
+
+    private var date = ModDate()
+    private var install = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         checkVersion()
@@ -93,7 +108,8 @@ class StarterActivity : AppCompatActivity() {
         fragmentManager.beginTransaction().replace(R.id.content_main, MainFragment(), "home").commit()
     }
 
-    private fun checkVersion() {
+    fun checkVersion() {
+        Toast.makeText(this, resources.getText(R.string.checking_for_updates), Toast.LENGTH_SHORT).show()
         Observable.fromCallable { loadAndParseAsync() }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -101,76 +117,172 @@ class StarterActivity : AppCompatActivity() {
                     try {
                         val currentDate = IOUtils.toString(FileInputStream("/system/mod_version_mdy"), StandardCharsets.UTF_8).split("_")
                         val currentModDate = ModDate()
-                        currentModDate.month = currentDate[0].toInt() - 1
+                        currentModDate.month = currentDate[0].toInt()
                         currentModDate.day = currentDate[1].toInt()
-                        currentModDate.year = currentDate[2].trim().toInt() + 2000
+                        currentModDate.year = currentDate[2].trim().toInt()
 
                         if (currentModDate < it) {
-                            askToUpdate(it.url, it)
+                            askToUpdate(it)
+                        } else {
+                            Toast.makeText(this, resources.getText(R.string.no_updates_found), Toast.LENGTH_SHORT).show()
                         }
                     } catch (e: FileNotFoundException) {
-                        askToInstall(it.url)
+                        askToInstall(it)
                     } catch (e: NullPointerException) {
-                        askToInstall(it.url)
+                        askToInstall(it)
                     }
                 }
     }
 
     private fun loadAndParseAsync(): ModDate {
-        val doc = Jsoup.connect("https://androidfilehost.com/?w=files&flid=203777&sort_by=date&sort_dir=DESC").followRedirects(true).get()
-        val links = doc.select("div.file-name")
+        val content = IOUtils.toString(URL("https://api.github.com/repos/zacharee/V20Mods_Releases/releases/latest"))
+        val json = JSONObject(content)
 
-        val name = links[0].children()[0].children()[0]
-        val date = "([^_]*)_(\\d+)_(\\d+)_(\\d+)\\.zip\\s*$".toRegex().matchEntire(name.text())?.groups!!
+        val tag = json["tag_name"].toString().split("_")
+
+        val asset = json.getJSONArray("assets").getJSONObject(0)
+        val file = asset["browser_download_url"].toString()
+        val name = asset["name"].toString()
 
         val modDate = ModDate()
-        modDate.year = date[4]!!.value.toInt() + 2000
-        modDate.month = date[2]!!.value.toInt() - 1
-        modDate.day = date[3]!!.value.toInt()
-        modDate.url = name.attr("abs:href")
+        modDate.month = tag[0].toInt()
+        modDate.day = tag[1].toInt()
+        modDate.year = tag[2].toInt()
+        modDate.url = file
+        modDate.fileName = name
 
         return modDate
     }
 
-    private fun askToUpdate(url: String, date: ModDate) {
+    private fun askToUpdate(date: ModDate) {
         val dateFormat = SimpleDateFormat("MMMM dd, YYYY", Locale.getDefault())
 
         AlertDialog.Builder(this)
                 .setTitle(R.string.update_available)
                 .setMessage(String.format(Locale.getDefault(), resources.getString(R.string.update_available_desc), dateFormat.format(date.time)))
                 .setPositiveButton(android.R.string.yes, { _, _ ->
-                    openUrl(url)
+                    openUrl(date, true)
+                })
+                .setNeutralButton(R.string.download_only, { _, _ ->
+                    openUrl(date, false)
                 })
                 .setNegativeButton(android.R.string.no, null)
                 .setCancelable(false)
                 .show()
     }
 
-    private fun askToInstall(url: String) {
+    private fun askToInstall(date: ModDate) {
         AlertDialog.Builder(this)
                 .setTitle(R.string.mods_not_installed)
                 .setMessage(R.string.mods_not_installed_desc)
                 .setPositiveButton(android.R.string.yes, { _, _ ->
-                    openUrl(url)
+                    openUrl(date, true)
+                })
+                .setNeutralButton(R.string.download_only, { _, _ ->
+                    openUrl(date, false)
                 })
                 .setNegativeButton(android.R.string.no, null)
                 .setCancelable(false)
                 .show()
     }
 
-    private fun openUrl(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
+    private fun askToReboot() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.reboot)
+                .setMessage(R.string.reboot_needed)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, { _, _ ->
+                    SuUtils.sudo("reboot recovery")
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show()
+    }
+
+    private fun openUrl(date: ModDate, install: Boolean) {
+        this.date = date
+        this.install = install
+
+        if (checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQ)
+        } else {
+            startDownload(date, install)
+        }
+    }
+
+    private fun startDownload(date: ModDate, install: Boolean) {
+        val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent?.action == DownloadManager.ACTION_DOWNLOAD_COMPLETE) {
+                    unregisterReceiver(this)
+
+                    val id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+                    if (id != -1L) {
+                        val query = DownloadManager.Query()
+                        query.setFilterByStatus(DownloadManager.STATUS_SUCCESSFUL)
+                        val cursor = downloadManager.query(query)
+                        if (!cursor.moveToFirst()) {
+                            cursor.close()
+                            return
+                        }
+                        do {
+                            val reference = cursor.getLong(cursor.getColumnIndex(DownloadManager.COLUMN_ID))
+                            if (id == reference) {
+                                performInstall()
+                            }
+                        } while (cursor.moveToNext())
+                        cursor.close()
+                    }
+                }
+            }
+        }
+        makeDirectoryIfNeeded()
+
+        if (!fileExists(date.fileName)) {
+            if (install) registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+
+            val request = DownloadManager.Request(Uri.parse(date.url))
+
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+            request.setDestinationInExternalPublicDir("/V20Mods", date.fileName)
+            downloadManager.enqueue(request)
+        } else {
+            performInstall()
+        }
+    }
+
+    private fun performInstall() {
+        SuUtils.sudo("echo '--update_package=/sdcard/0/V20Mods/${date.fileName}' >> /cache/recovery/command")
+        askToReboot()
+    }
+
+    private fun makeDirectoryIfNeeded() {
+        val directory = File(Environment.getExternalStorageDirectory().path + "/V20Mods")
+        directory.mkdirs()
+    }
+
+    private fun fileExists(name: String): Boolean {
+        val file = File(Environment.getExternalStorageDirectory().path + "/V20Mods/" + name)
+        return file.exists()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == REQ) {
+            if (permissions.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    && grantResults[permissions.indexOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)] == PackageManager.PERMISSION_GRANTED) {
+                startDownload(date, install)
+            }
+        }
     }
 
     class ModDate : GregorianCalendar() {
         var month: Int
             get() {
-                return get(Calendar.MONTH)
+                return get(Calendar.MONTH) + 1
             }
             set(value) {
-                set(Calendar.MONTH, value)
+                set(Calendar.MONTH, value - 1)
             }
 
         var day: Int
@@ -186,13 +298,16 @@ class StarterActivity : AppCompatActivity() {
                 return get(Calendar.YEAR)
             }
             set(value) {
-                set(Calendar.YEAR, value)
+                var v = value
+                if (value < 2000) v += 2000
+                set(Calendar.YEAR, v)
             }
 
+        var fileName: String = ""
         var url: String = ""
 
         override fun toString(): String {
-            return "Month: $month, Day: $day, Year: $year, URL: $url"
+            return "Month: ${month + 1}, Day: $day, Year: $year, URL: $url"
         }
     }
 }

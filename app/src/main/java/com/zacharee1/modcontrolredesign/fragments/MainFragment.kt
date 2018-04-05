@@ -9,10 +9,11 @@ import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
 import android.support.v7.app.AppCompatActivity
 import com.zacharee1.modcontrolredesign.R
+import com.zacharee1.modcontrolredesign.StarterActivity
 import com.zacharee1.modcontrolredesign.util.Stuff
 import com.zacharee1.modcontrolredesign.util.SuUtils
 
-public class MainFragment : PreferenceFragment() {
+class MainFragment : PreferenceFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,12 @@ public class MainFragment : PreferenceFragment() {
         val hotReboot = findPreference("hot_reboot")
         hotReboot.setOnPreferenceClickListener {
             SuUtils.sudo("killall system_server")
+            true
+        }
+
+        val checkForUpdates = findPreference("check_for_updates")
+        checkForUpdates.setOnPreferenceClickListener {
+            (activity as StarterActivity).checkVersion()
             true
         }
 

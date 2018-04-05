@@ -82,6 +82,7 @@
     <string name="force_opaque">Force Use of Opaque Color</string>
     <string name="enable_button_coloring">Enable Button Coloring</string>
     <string name="second_screen">Second Screen</string>
+    <string name="reboot_needed">You need to reboot to install the mods. Would you like to do that now? If not, the installation will happen when you next reboot to Recovery.</string>
 
     <string name="show_home_screen_widgets">Show Home Screen Widgets In Settings</string>
 
@@ -101,9 +102,13 @@
     <string name="edit_power_buttons">Edit Buttons</string>
 
     <string name="blank"> </string>
+    <string name="download_only">Download Only</string>
 
     <string name="update_available">Update Available!</string>
+    <string name="check_for_updates">Check for Updates</string>
     <string name="mods_not_installed">Missing Mods!</string>
+    <string name="checking_for_updates">Checking for updates…</string>
+    <string name="no_updates_found">No updates found.</string>
 
     <string name="update_available_desc">An update for the mod pack, dated %s, is available. Would you like to download it now?</string>
     <string name="mods_not_installed_desc">It appears that you don\'t have any mods installed. This app won\'t do anything without them. Would you like to download them now?</string>
