@@ -248,7 +248,7 @@ class StarterActivity : AppCompatActivity() {
             request.setDestinationInExternalPublicDir("/V20Mods", date.fileName)
             downloadManager.enqueue(request)
         } else {
-            performInstall()
+            if (install) performInstall()
         }
     }
 
