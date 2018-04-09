@@ -54,6 +54,7 @@
 
         <SwitchPreference
             android:title="Launcher Icon"
+            android:defaultValue="true"
             android:summary="Show icon in launcher to open Mod Control"
             android:key="show_launcher" />
 

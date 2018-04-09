@@ -19,7 +19,6 @@
 
         <activity-alias
             android:name=".LauncherActivity"
-            android:enabled="false"
             android:targetActivity=".StarterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
