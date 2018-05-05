@@ -44,6 +44,8 @@ class OthersFragment : PreferenceFragment() {
 
         val immersiveSBEnabled = Settings.Global.getInt(activity.contentResolver, Stuff.IMMERSIVE_SB_ENABLED, 1)
 
+        val overrideFingerprint = Settings.Global.getInt(activity.contentResolver, "override_allow_fingerprint", 0)
+
         if (Stuff.isV20) {
             val minbatimmSwitch = findPreference("minbatimm") as SwitchPreference
             val minclockimmSwitch = findPreference("minclockimm") as SwitchPreference
@@ -165,6 +167,13 @@ class OthersFragment : PreferenceFragment() {
         lockReplySwitch.isChecked = Settings.Secure.getInt(activity.contentResolver, lockReplySwitch.key, 0) == 1
         lockReplySwitch.setOnPreferenceChangeListener { _, newValue ->
             Settings.Secure.putInt(activity.contentResolver, lockReplySwitch.key, if (newValue.toString().toBoolean()) 1 else 0)
+            true
+        }
+
+        val overrideFingerprintSwitch = findPreference("override_allow_fingerprint") as SwitchPreference
+        overrideFingerprintSwitch.isChecked = overrideFingerprint != 0
+        overrideFingerprintSwitch.setOnPreferenceChangeListener { preference, newValue ->
+            Settings.Global.putInt(context.contentResolver, preference.key, newValue.toString().toInt())
             true
         }
     }

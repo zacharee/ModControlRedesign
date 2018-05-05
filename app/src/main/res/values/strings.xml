@@ -112,4 +112,6 @@
 
     <string name="update_available_desc">An update for the mod pack, dated %s, is available. Would you like to download it now?</string>
     <string name="mods_not_installed_desc">It appears that you don\'t have any mods installed. This app won\'t do anything without them. Would you like to download them now?</string>
+
+    <string name="override_fingerprint">Always Allow Fingerprint Unlock</string>
 </resources>

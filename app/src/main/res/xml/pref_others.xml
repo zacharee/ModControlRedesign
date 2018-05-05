@@ -101,6 +101,10 @@
         android:key="other">
 
         <SwitchPreference
+            android:title="@string/override_fingerprint"
+            android:key="override_allow_fingerprint" />
+
+        <SwitchPreference
             android:title="@string/wakeplug"
             android:key="wakeplug" />
 
