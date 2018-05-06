@@ -173,7 +173,7 @@ class OthersFragment : PreferenceFragment() {
         val overrideFingerprintSwitch = findPreference("override_allow_fingerprint") as SwitchPreference
         overrideFingerprintSwitch.isChecked = overrideFingerprint != 0
         overrideFingerprintSwitch.setOnPreferenceChangeListener { preference, newValue ->
-            Settings.Global.putInt(context.contentResolver, preference.key, newValue.toString().toInt())
+            Settings.Global.putInt(context.contentResolver, preference.key, if (newValue.toString().toBoolean()) 1 else 0)
             true
         }
     }
