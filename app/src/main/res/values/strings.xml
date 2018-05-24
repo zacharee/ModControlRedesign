@@ -114,4 +114,5 @@
     <string name="mods_not_installed_desc">It appears that you don\'t have any mods installed. This app won\'t do anything without them. Would you like to download them now?</string>
 
     <string name="override_fingerprint">Always Allow Fingerprint Unlock</string>
+    <string name="check_updates_failed">Unable to check for updates.</string>
 </resources>

@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-project.version = 15
+project.version = 16
 
 android {
     compileSdkVersion 27

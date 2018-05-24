@@ -114,44 +114,55 @@ class StarterActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    try {
-                        val currentDate = IOUtils.toString(FileInputStream("/system/mod_version_mdy"), StandardCharsets.UTF_8).split("_")
-                        val currentModDate = ModDate()
-                        currentModDate.month = currentDate[0].toInt()
-                        currentModDate.day = currentDate[1].toInt()
-                        currentModDate.year = currentDate[2].trim().toInt()
+                    if (it != null) {
+                        try {
+                            val currentDate = IOUtils.toString(FileInputStream("/system/mod_version_mdy"), StandardCharsets.UTF_8).split("_")
+                            val currentModDate = ModDate()
+                            currentModDate.month = currentDate[0].toInt()
+                            currentModDate.day = currentDate[1].toInt()
+                            currentModDate.year = currentDate[2].trim().toInt()
 
-                        if (currentModDate < it) {
-                            askToUpdate(it)
-                        } else {
-                            Toast.makeText(this, resources.getText(R.string.no_updates_found), Toast.LENGTH_SHORT).show()
+                            if (currentModDate < it) {
+                                askToUpdate(it)
+                            } else {
+                                Toast.makeText(this, resources.getText(R.string.no_updates_found), Toast.LENGTH_SHORT).show()
+                            }
+                        } catch (e: FileNotFoundException) {
+                            askToInstall(it)
+                        } catch (e: NullPointerException) {
+                            askToInstall(it)
                         }
-                    } catch (e: FileNotFoundException) {
-                        askToInstall(it)
-                    } catch (e: NullPointerException) {
-                        askToInstall(it)
+                    } else {
+                        Toast.makeText(this, resources.getText(R.string.check_updates_failed), Toast.LENGTH_SHORT).show()
                     }
                 }
     }
 
-    private fun loadAndParseAsync(): ModDate {
-        val content = IOUtils.toString(URL("https://api.github.com/repos/zacharee/V20Mods_Releases/releases/latest"))
-        val json = JSONObject(content)
+    private fun loadAndParseAsync(): ModDate? {
 
-        val tag = json["tag_name"].toString().split("_")
+        return try {
+            val modDate = ModDate()
 
-        val asset = json.getJSONArray("assets").getJSONObject(0)
-        val file = asset["browser_download_url"].toString()
-        val name = asset["name"].toString()
+            val content = IOUtils.toString(URL("https://api.github.com/repos/zacharee/V20Mods_Releases/releases/latest"))
+            val json = JSONObject(content)
 
-        val modDate = ModDate()
-        modDate.month = tag[0].toInt()
-        modDate.day = tag[1].toInt()
-        modDate.year = tag[2].toInt()
-        modDate.url = file
-        modDate.fileName = name
+            val tag = json["tag_name"].toString().split("_")
 
-        return modDate
+            val asset = json.getJSONArray("assets").getJSONObject(0)
+            val file = asset["browser_download_url"].toString()
+            val name = asset["name"].toString()
+
+            modDate.month = tag[0].toInt()
+            modDate.day = tag[1].toInt()
+            modDate.year = tag[2].toInt()
+            modDate.url = file
+            modDate.fileName = name
+
+            modDate
+        } catch (e: Exception) {
+            null
+        }
+
     }
 
     private fun askToUpdate(date: ModDate) {
